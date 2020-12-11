@@ -13,6 +13,29 @@ export class PostServiceService {
 
   constructor(private http: HttpClient) { }
 
+  getAllPosts():Observable<BlogPost[]>{
+    const perPage = Number.MAX_SAFE_INTEGER.toString();
+
+    let params = {
+      page: "1",
+      perPage: perPage
+    }
+
+    return this.http.get<BlogPost[]>(`https://web422a5api.herokuapp.com/api/posts`, { params });
+  }
+
+  newPost(data: BlogPost): Observable<any>{
+    return this.http.post<any>(`https://web422a5api.herokuapp.com/api/posts`, data);
+  }
+
+  updatePostById(id: string, data: BlogPost): Observable<any>{
+    return this.http.put<any>(`https://web422a5api.herokuapp.com/api/posts/${id}`, data);
+  }
+
+  deletePostById(id: string): Observable<any>{
+    return this.http.delete<any>(`https://web422a5api.herokuapp.com/api/posts/${id}`);
+  }
+
   getPosts(page, tag, category): Observable<BlogPost[]> {
     let params = {
       page: page,
